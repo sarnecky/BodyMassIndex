@@ -1,9 +1,9 @@
 using Autofac;
 using Business;
+using Database.SQL;
 using Infrastructure.MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +34,7 @@ namespace WebApp
             builder.RegisterModule<WebAppModule>();
             builder.RegisterModule<MediatrModule>();
             builder.RegisterModule<BusinessModule>();
+            builder.RegisterModule<DatabaseSqlModule>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
