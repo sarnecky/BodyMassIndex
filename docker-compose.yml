@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  mssql:
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      SA_PASSWORD: 12345678Aa.
+      ACCEPT_EULA: "Y"
+    ports:
+      - 50002:1433
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:
