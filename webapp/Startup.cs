@@ -5,6 +5,7 @@ using Infrastructure.MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +28,10 @@ namespace WebApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services
+                .AddDbContext<BodyMassIndexContext>(
+                    p => p.UseSqlServer(
+                        _configuration.GetConnectionString("DefaultConnection")));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -36,7 +41,7 @@ namespace WebApp
             builder.RegisterModule<BusinessModule>();
             builder.RegisterModule<DatabaseSqlModule>();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, BodyMassIndexContext context)
         {
             if (env.IsDevelopment())
             {
@@ -63,7 +68,9 @@ namespace WebApp
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-
+            
+            context.Database.Migrate();
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

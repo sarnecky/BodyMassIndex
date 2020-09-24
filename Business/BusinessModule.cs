@@ -1,6 +1,7 @@
 using System.Reflection;
 using Autofac;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
+using FluentValidation;
 using MediatR;
 using Module = Autofac.Module;
 
@@ -15,6 +16,10 @@ namespace Business
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsClosedTypesOf(typeof(IRequestHandler<,>))
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AsClosedTypesOf(typeof(IValidator<>))
                 .InstancePerLifetimeScope();
         }
     }

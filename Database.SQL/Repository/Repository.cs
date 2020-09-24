@@ -15,5 +15,7 @@ namespace Database.SQL.Repository
 
         public async Task AddAsync(TEntity entity) => 
             await _context.Set<TEntity>().AddAsync(entity);
+        public async Task SaveAsync() =>
+            await _context.SaveChangesAsync();
     }
 }

@@ -6,5 +6,6 @@ namespace Database.SQL.Repository
         where TEntity : class
     {
         Task AddAsync(TEntity entity);
+        Task SaveAsync();
     }
 }

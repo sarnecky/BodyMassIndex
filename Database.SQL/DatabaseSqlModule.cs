@@ -1,4 +1,5 @@
 using Autofac;
+using Database.SQL.Entities;
 using Database.SQL.Repository;
 using Microsoft.Extensions.Configuration;
 
@@ -15,8 +16,13 @@ namespace Database.SQL
                 .AsImplementedInterfaces();
 
             builder
-                .RegisterGeneric(typeof(Repository<>))
-                .As(typeof(Repository<>))
+                .RegisterType<Repository<BmiResult>>()
+                .As<IRepository<BmiResult>>()
+                .InstancePerLifetimeScope();
+            
+            builder
+                .RegisterType<ReadRepository<BmiResult>>()
+                .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
         }
     }
